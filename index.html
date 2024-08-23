@@ -1,5 +1,10 @@
 <html><head>
 <style>
+body {
+  font-family: 'Consolas', monospace;
+  background-color: #000000;
+  color: #ffffff
+}
 #chat-form {
 
 text-align: center;
@@ -25,34 +30,32 @@ background: light gray;
 }
 </style>
 </head><body>
-<span style="font-weight: 400;"><div id="chat-box"></div></span>
-<span style="font-weight: 400;"><form id="chat-form">
+  <div id="chat-box"></div>
+  <form id="chat-form">
+    <input type="text" id="chat-input">
+    <button type="submit">Send</button>
+  </form>
 
-<span style="font-weight: 400;">  <input type="text" id="chat-input"></span>
+  <script>
+    const socket = new WebSocket('ws://your-server-url.com:8080');
 
-<span style="font-weight: 400;">  <button type="submit">Send</button></span>
+    socket.onmessage = (event) => {
+      addMessage(event.data);
+    };
 
-<span style="font-weight: 400;"></span></form>
+    document.getElementById('chat-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      const message = input.value;
+      socket.send(message);
+      input.value = '';
+    });
 
-<script>
-const chatForm = document.getElementById("chat-form");
-const chatbox = document.getElementById("chat-box");
-
-if (chatForm && chatbox) {
-chatForm.addEventListener("submit", e => {
-e.preventDefault();
-const input = document.getElementById("chat-input");
-const message = input.value;
-addMessage(message);
-input.value = "";
-});
-
-function addMessage(message) {
-const div = document.createElement("div");
-div.classList.add("chat-message");
-div.innerHTML = message;
-chatbox.appendChild(div);
-}
-}
-</script>
+    function addMessage(message) {
+      const div = document.createElement('div');
+      div.classList.add('chat-message');
+      div.innerHTML = message;
+      document.getElementById('chat-box').appendChild(div);
+    }
+  </script>
 </body></html>
