@@ -35,24 +35,24 @@ background: light gray;
 <span style="font-weight: 400;"></span></form>
 
 <script>
-const form = document.getElementById("chat-form");
+const chatForm = document.getElementById("chat-form");
 const chatbox = document.getElementById("chat-box");
 
-if (form && chatbox) {
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const input = document.getElementById("chat-input");
-    const message = input.value;
-    addMessage(message);
-    input.value = "";
-  });
+if (chatForm && chatbox) {
+chatForm.addEventListener("submit", e => {
+e.preventDefault();
+const input = document.getElementById("chat-input");
+const message = input.value;
+addMessage(message);
+input.value = "";
+});
 
-  function addMessage(message) {
-    const div = document.createElement("div");
-    div.classList.add("chat-message");
-    div.innerHTML = message;
-    chatbox.appendChild(div);
-  }
+function addMessage(message) {
+const div = document.createElement("div");
+div.classList.add("chat-message");
+div.innerHTML = message;
+chatbox.appendChild(div);
+}
 }
 </script>
 </body></html>
